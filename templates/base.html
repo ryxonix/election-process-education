@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Civic Navigator{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#003366',
+                        secondary: '#00594C',
+                        accent: '#D32F2F',
+                        dark: '#000000',
+                        light: '#F4F6F8'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Mermaid.js -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #F4F6F8; color: #000000; font-size: 1.125rem; line-height: 1.6; }
+        .dashboard-card {
+            background: #FFFFFF;
+            border: 2px solid #000000;
+            border-radius: 4px;
+        }
+        .gov-header {
+            background-color: #003366;
+            color: #FFFFFF;
+            border-bottom: 4px solid #D32F2F;
+        }
+        .gov-button {
+            background-color: #003366;
+            color: #FFFFFF;
+            border: 2px solid #003366;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none !important;
+        }
+        .gov-button:hover, .gov-button:focus {
+            background-color: #FFFFFF;
+            color: #003366;
+            text-decoration: underline !important;
+        }
+        .gov-button-outline {
+            background-color: #FFFFFF;
+            color: #003366;
+            border: 2px solid #003366;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none !important;
+        }
+        .gov-button-outline:hover, .gov-button-outline:focus {
+            background-color: #003366;
+            color: #FFFFFF;
+            text-decoration: underline !important;
+        }
+        a { color: #003366; text-decoration: underline; font-weight: bold; }
+        a:hover, a:focus { color: #D32F2F; }
+        nav a { color: #FFFFFF; text-decoration: none; }
+        nav a:hover, nav a:focus { color: #FFC000; text-decoration: underline; }
+        .high-contrast-focus:focus { outline: 4px solid #FFC000; outline-offset: 2px; }
+        /* Override tailwind text colors for high contrast */
+        .text-gray-600 { color: #1a1a1a !important; }
+        .text-gray-500 { color: #333333 !important; }
+        /* Screen reader only utility class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="gov-header p-4 shadow-md sticky top-0 z-50" aria-label="Main Navigation">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold tracking-tight high-contrast-focus" style="text-decoration: none;">
+                <span aria-hidden="true">🏛️</span> Civic Navigator
+            </a>
+            <div class="space-x-6 hidden md:flex font-bold">
+                <a href="/registration" class="high-contrast-focus">Registration</a>
+                <a href="/verification" class="high-contrast-focus">Verification</a>
+                <a href="/polling" class="high-contrast-focus">Polling Day</a>
+                <a href="/simulator" class="bg-white text-primary px-4 py-2 rounded border-2 border-white hover:bg-gray-200 hover:text-primary high-contrast-focus" style="text-decoration: none;">Simulator</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto p-4 md:p-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-black border-t-2 border-black text-center p-6 mt-8 font-bold">
+        <p>&copy; 2026 Civic Navigator. Official Voting Information Portal.</p>
+    </footer>
+</body>
+</html>

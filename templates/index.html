@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Civic Navigator - Home{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-12">
+    <!-- Hero Section -->
+    <div class="text-center space-y-6 py-12 border-b-4 border-black pb-12">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-black uppercase tracking-tight">
+            Official Civic Navigator
+        </h1>
+        <p class="text-2xl text-black font-bold max-w-2xl mx-auto">
+            Secure, reliable information to guide you through the democratic process.
+        </p>
+        <div class="flex justify-center gap-6 pt-6">
+            <a href="/registration" class="gov-button text-xl high-contrast-focus">
+                Start Learning
+            </a>
+            <a href="/simulator" class="gov-button-outline text-xl high-contrast-focus">
+                Try Simulator
+            </a>
+        </div>
+    </div>
+
+    <!-- Stages Grid -->
+    <div class="grid md:grid-cols-3 gap-8">
+        <!-- Stage 1 -->
+        <a href="/registration" class="dashboard-card p-6 hover:bg-gray-100 transition-colors high-contrast-focus block" style="text-decoration: none;">
+            <div class="mb-4">
+                <span class="text-4xl" aria-hidden="true">📝</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-black underline">1. Registration</h3>
+            <p class="text-black font-medium text-lg">Ensure you are correctly registered to vote. Check deadlines and requirements.</p>
+        </a>
+
+        <!-- Stage 2 -->
+        <a href="/verification" class="dashboard-card p-6 hover:bg-gray-100 transition-colors high-contrast-focus block" style="text-decoration: none;">
+            <div class="mb-4">
+                <span class="text-4xl" aria-hidden="true">🔍</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-black underline">2. Verification</h3>
+            <p class="text-black font-medium text-lg">Verify your voter details, find your polling booth, and check your voter slip.</p>
+        </a>
+
+        <!-- Stage 3 -->
+        <a href="/polling" class="dashboard-card p-6 hover:bg-gray-100 transition-colors high-contrast-focus block" style="text-decoration: none;">
+            <div class="mb-4">
+                <span class="text-4xl" aria-hidden="true">🗳️</span>
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-black underline">3. Polling Day</h3>
+            <p class="text-black font-medium text-lg">Know the steps on election day, what to bring, and how to cast your vote.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

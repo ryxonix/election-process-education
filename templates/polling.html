@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Civic Navigator - Polling Day{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-8">
+    <div class="dashboard-card p-8 border-t-8 border-secondary">
+        <div class="flex items-center gap-4 mb-6 pb-4 border-b-4 border-black">
+            <span class="text-4xl" aria-hidden="true">🗳️</span>
+            <h1 class="text-4xl font-extrabold text-black uppercase">Stage 3: Polling Day</h1>
+        </div>
+        
+        <div class="prose prose-xl max-w-none text-black font-medium">
+            <p class="text-xl font-bold">It's election day! Here is what you need to know and do when you arrive at the polling booth.</p>
+            
+            <h2 class="text-2xl font-bold text-black mt-8 mb-4 bg-gray-200 p-2 border-l-4 border-secondary">What to Bring</h2>
+            <div class="bg-white border-4 border-accent p-6 mb-6">
+                <p class="text-xl font-bold text-accent uppercase flex items-center gap-2">
+                    <span class="text-3xl">⚠️</span> IMPORTANT NOTICE
+                </p>
+                <p class="text-black font-bold mt-2">Mobile phones, cameras, or any other electronic gadgets are NOT allowed inside the polling booth.</p>
+            </div>
+            <ul class="list-disc pl-8 space-y-3">
+                <li>Your <strong>Voter Information Slip</strong> (highly recommended as it speeds up the process).</li>
+                <li>An <strong>approved Identity Document</strong>. Even if you have the voter slip, an ID is mandatory. Valid IDs include:</li>
+                <ul class="list-circle pl-8 mt-2 text-lg text-black font-bold space-y-1">
+                    <li>EPIC (Voter ID Card)</li>
+                    <li>Aadhaar Card</li>
+                    <li>PAN Card</li>
+                    <li>Driving License</li>
+                    <li>Passport</li>
+                    <li>Passbook with photograph issued by Bank/Post Office</li>
+                </ul>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-black mt-8 mb-4 bg-gray-200 p-2 border-l-4 border-secondary">Step-by-Step Voting Process</h2>
+            
+            <div class="space-y-6">
+                <div class="flex items-start gap-4 border-b-2 border-gray-300 pb-4">
+                    <div class="bg-black text-white w-10 h-10 rounded flex items-center justify-center font-bold text-xl flex-shrink-0">1</div>
+                    <div>
+                        <h4 class="font-bold text-xl text-black underline">First Polling Officer</h4>
+                        <p class="text-lg">They will check your name on the electoral roll and verify your ID document.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 border-b-2 border-gray-300 pb-4">
+                    <div class="bg-black text-white w-10 h-10 rounded flex items-center justify-center font-bold text-xl flex-shrink-0">2</div>
+                    <div>
+                        <h4 class="font-bold text-xl text-black underline">Second Polling Officer</h4>
+                        <p class="text-lg">They will ink your left forefinger, take your signature or thumb impression on the register, and give you a signed voter's slip.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 border-b-2 border-gray-300 pb-4">
+                    <div class="bg-black text-white w-10 h-10 rounded flex items-center justify-center font-bold text-xl flex-shrink-0">3</div>
+                    <div>
+                        <h4 class="font-bold text-xl text-black underline">Third Polling Officer</h4>
+                        <p class="text-lg">They will collect your signed voter's slip and press the "Ballot" button on the Control Unit to activate the EVM in the voting compartment.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 border-b-2 border-gray-300 pb-4">
+                    <div class="bg-black text-white w-10 h-10 rounded flex items-center justify-center font-bold text-xl flex-shrink-0">4</div>
+                    <div>
+                        <h4 class="font-bold text-xl text-black underline">Casting Your Vote</h4>
+                        <p class="text-lg">Proceed to the Electronic Voting Machine (EVM) inside the voting compartment. Press the blue button against the symbol/name of the candidate of your choice. You will hear a loud beep sound.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-black text-white w-10 h-10 rounded flex items-center justify-center font-bold text-xl flex-shrink-0">5</div>
+                    <div>
+                        <h4 class="font-bold text-xl text-black underline">VVPAT Verification</h4>
+                        <p class="text-lg">Check the VVPAT machine's transparent window. A slip with the candidate's serial number, name, and symbol will be visible for 7 seconds before it drops into the sealed box.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 flex justify-between items-center border-t-4 border-black pt-6">
+            <a href="/verification" class="gov-button-outline high-contrast-focus">← Back: Verification</a>
+            <a href="/simulator" class="gov-button high-contrast-focus">Try Scenario Simulator →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

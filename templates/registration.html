@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Civic Navigator - Registration{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-8">
+    <div class="dashboard-card p-8 border-t-8 border-primary">
+        <div class="flex items-center gap-4 mb-6 pb-4 border-b-4 border-black">
+            <span class="text-4xl" aria-hidden="true">📝</span>
+            <h1 class="text-4xl font-extrabold text-black uppercase">Stage 1: Registration</h1>
+        </div>
+        
+        <div class="prose prose-xl max-w-none text-black font-medium">
+            <p class="text-xl">Voter registration is the first step to participating in the democratic process. In India, you must be enrolled in the Electoral Roll to cast your vote.</p>
+            
+            <h2 class="text-2xl font-bold text-black mt-8 mb-4 bg-gray-200 p-2 border-l-4 border-primary">Eligibility</h2>
+            <ul class="list-disc pl-8 space-y-3">
+                <li>You must be an Indian citizen.</li>
+                <li>You must be 18 years of age or older on the qualifying date (usually January 1st of the year of revision of electoral roll).</li>
+                <li>You must be an ordinary resident of the polling area where you wish to enroll.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-black mt-8 mb-4 bg-gray-200 p-2 border-l-4 border-primary">How to Register (Form 6)</h2>
+            <p>To register for the first time, you need to fill out <strong>Form 6</strong>. You can do this:</p>
+            <ul class="list-disc pl-8 space-y-3">
+                <li><strong>Online:</strong> Visit the Voters' Services Portal (voters.eci.gov.in) or use the Voter Helpline App.</li>
+                <li><strong>Offline:</strong> Submit a physical Form 6 to the Electoral Registration Officer (ERO) or Booth Level Officer (BLO) of your area.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-black mt-8 mb-4 bg-gray-200 p-2 border-l-4 border-primary">Documents Required</h2>
+            <p>You will need proof of age and proof of residence. Common documents include:</p>
+            <div class="bg-gray-100 p-6 rounded border-2 border-black mt-4">
+                <ul class="list-disc pl-8 space-y-2 font-bold text-black">
+                    <li>Aadhaar Card</li>
+                    <li>Passport</li>
+                    <li>Driving License</li>
+                    <li>PAN Card (Age proof)</li>
+                    <li>Latest Water / Telephone / Electricity / Gas Connection Bill (Residence proof)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-10 flex justify-between items-center border-t-4 border-black pt-6">
+            <a href="/" class="gov-button-outline high-contrast-focus">← Back to Home</a>
+            <a href="/verification" class="gov-button high-contrast-focus">Next: Verification →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

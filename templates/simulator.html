@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Civic Navigator - Simulator{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    <div class="dashboard-card p-8 border-t-8 border-primary">
+        <div class="text-center mb-8 border-b-4 border-black pb-6">
+            <h1 class="text-4xl font-extrabold text-black uppercase mb-2">Scenario Simulator</h1>
+            <p class="text-xl text-black font-bold">Test what happens in common, unexpected situations on Polling Day.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Form Section -->
+            <div class="bg-gray-100 p-6 border-2 border-black">
+                <form method="POST" action="/simulator" class="space-y-6">
+                    <fieldset class="space-y-4">
+                        <legend class="text-2xl font-bold mb-4 text-black underline">What went wrong?</legend>
+                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
+                            <input type="radio" name="issue" value="lost_id" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" required {% if request.form.get('issue') == 'lost_id' %}checked{% endif %}>
+                            <span class="text-black font-bold text-lg">I forgot/lost my Voter ID (EPIC) card</span>
+                        </label>
+                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
+                            <input type="radio" name="issue" value="wrong_booth" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'wrong_booth' %}checked{% endif %}>
+                            <span class="text-black font-bold text-lg">I'm at the wrong polling booth</span>
+                        </label>
+                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
+                            <input type="radio" name="issue" value="name_missing" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'name_missing' %}checked{% endif %}>
+                            <span class="text-black font-bold text-lg">My name is missing from the list</span>
+                        </label>
+                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
+                            <input type="radio" name="issue" value="normal" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'normal' %}checked{% endif %}>
+                            <span class="text-black font-bold text-lg">Nothing, I have everything! (Normal flow)</span>
+                        </label>
+                    </fieldset>
+                    <button type="submit" class="w-full gov-button text-xl py-4 uppercase tracking-wider high-contrast-focus">
+                        Simulate Flow
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result Section -->
+            <div class="bg-white p-6 border-2 border-black flex flex-col items-center justify-center min-h-[400px]" aria-live="polite">
+                {% if scenario_data %}
+                    <h3 class="text-2xl font-bold mb-6 text-black w-full text-left border-b-2 border-black pb-2 uppercase">Your Voting Flow</h3>
+                    <!-- Screen reader accessible text for the flowchart result -->
+                    <div class="sr-only">
+                        Flowchart result generated. Based on your selection, follow the steps shown visually on screen.
+                    </div>
+                    <div class="mermaid w-full overflow-x-auto text-lg font-bold" aria-hidden="true">
+                        {{ scenario_data | safe }}
+                    </div>
+                {% else %}
+                    <div class="text-center text-black font-bold">
+                        <div class="text-6xl mb-6" aria-hidden="true">🔀</div>
+                        <p class="text-2xl">Select a scenario to see the flowchart.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
