@@ -12,6 +12,8 @@ def create_app():
     
     return app
 
+# Export the app object at the top level for gunicorn (Render)
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     app.run(debug=True)

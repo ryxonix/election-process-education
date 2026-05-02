@@ -1,1 +1,1 @@
-web: python -m gunicorn run:create_app()
+web: python -m gunicorn app:app
