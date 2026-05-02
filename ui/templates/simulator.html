@@ -1,79 +1,111 @@
 {% extends "base.html" %}
 
-{% block title %}Civic Navigator - Simulator{% endblock %}
+{% block title %}Vanguard Voter Intelligence - Scenario Simulator{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto space-y-8">
+<div class="max-w-5xl mx-auto space-y-8">
     <div class="dashboard-card p-8 border-t-8 border-primary">
         <div class="text-center mb-8 border-b-4 border-black pb-6">
-            <h1 class="text-4xl font-extrabold text-black uppercase mb-2">Scenario Simulator</h1>
-            <p class="text-xl text-black font-bold">Test what happens in common, unexpected situations on Polling Day.</p>
+            <h1 class="text-4xl font-extrabold text-black uppercase mb-2">⚡ Scenario Simulator</h1>
+            <p class="text-xl text-black font-bold">Dual-Agent Verification Loop Active. Engine-A maps your path. Engine-B audits for neutrality.</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
             <!-- Form Section -->
             <div class="bg-gray-100 p-6 border-2 border-black">
                 <form method="POST" action="/simulator" class="space-y-6">
-                    <fieldset class="space-y-4">
-                        <legend class="text-2xl font-bold mb-4 text-black underline">What went wrong?</legend>
-                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
-                            <input type="radio" name="issue" value="lost_id" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" required {% if request.form.get('issue') == 'lost_id' %}checked{% endif %}>
-                            <span class="text-black font-bold text-lg">I forgot/lost my Voter ID (EPIC) card</span>
+                    <fieldset class="space-y-3">
+                        <legend class="text-2xl font-bold mb-4 text-black underline">Select Your Scenario</legend>
+
+                        {% set options = [
+                            ('normal', '✅ Normal Voting Flow'),
+                            ('lost_id', '🪪 Lost / Forgot Voter ID (EPIC)'),
+                            ('wrong_booth', '📍 At the Wrong Polling Booth'),
+                            ('name_missing', '❌ Name Missing from Electoral Roll'),
+                            ('booth_friction', '🚧 Denied Entry / Booth Friction'),
+                            ('tender_vote', '🗳️ Someone Voted in My Name')
+                        ] %}
+
+                        {% for value, label in options %}
+                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-yellow-50 transition-colors">
+                            <input type="radio" name="issue" value="{{ value }}" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if selected_issue == value %}checked{% endif %} {% if value == 'normal' and not selected_issue %}checked{% endif %} required>
+                            <span class="text-black font-bold text-lg">{{ label }}</span>
                         </label>
-                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
-                            <input type="radio" name="issue" value="wrong_booth" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'wrong_booth' %}checked{% endif %}>
-                            <span class="text-black font-bold text-lg">I'm at the wrong polling booth</span>
-                        </label>
-                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
-                            <input type="radio" name="issue" value="name_missing" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'name_missing' %}checked{% endif %}>
-                            <span class="text-black font-bold text-lg">My name is missing from the list</span>
-                        </label>
-                        <label class="flex items-center space-x-4 p-4 border-2 border-black bg-white cursor-pointer hover:bg-gray-200 transition-colors">
-                            <input type="radio" name="issue" value="normal" class="w-6 h-6 text-primary focus:ring-4 focus:ring-accent" {% if request.form.get('issue') == 'normal' %}checked{% endif %}>
-                            <span class="text-black font-bold text-lg">Nothing, I have everything! (Normal flow)</span>
-                        </label>
+                        {% endfor %}
                     </fieldset>
 
-                    <fieldset class="space-y-4 border-t-2 border-black pt-4">
-                        <legend class="text-xl font-bold mb-2 text-black">Contextual Override (AI Interceptor Test)</legend>
-                        <p class="text-sm text-gray-800">Test the non-partisan guardrails by injecting a political query here.</p>
-                        <input type="text" name="custom_query" class="w-full p-4 border-2 border-black focus:ring-4 focus:ring-accent" placeholder="e.g., Who should I vote for?">
+                    <fieldset class="space-y-3 border-t-2 border-black pt-4">
+                        <legend class="text-xl font-bold mb-2 text-black">🛡️ Test Engine-B Guardrails</legend>
+                        <p class="text-sm text-gray-700">Ask a political question below to test the neutrality interceptor.</p>
+                        <input type="text" name="custom_query"
+                            class="w-full p-4 border-2 border-black focus:ring-4 focus:ring-accent bg-white"
+                            placeholder='e.g., "Who should I vote for to fix the economy?"'
+                            aria-label="Test the AI neutrality guardrail with a political query">
                     </fieldset>
 
-                    <button type="submit" class="w-full gov-button text-xl py-4 uppercase tracking-wider high-contrast-focus">
-                        Simulate Flow
+                    <button type="submit" class="w-full gov-button text-xl py-4 uppercase tracking-wider high-contrast-focus" id="simulate-btn">
+                        ▶ Run Simulation
                     </button>
                 </form>
             </div>
 
             <!-- Result Section -->
-            <div class="bg-white p-6 border-2 border-black flex flex-col items-center justify-center min-h-[400px]" aria-live="polite">
+            <div class="bg-white p-6 border-2 border-black flex flex-col min-h-[500px]" aria-live="polite" aria-atomic="true">
+
                 {% if override_msg %}
-                    <div class="bg-accent text-white p-4 font-bold border-4 border-black w-full mb-6">
-                        🚨 {{ override_msg }}
-                    </div>
+                <div class="bg-red-900 text-white p-4 font-bold border-4 border-black mb-6 rounded" role="alert">
+                    <p class="text-lg">🛡️ Engine-B Override Activated</p>
+                    <p class="mt-2 font-normal">{{ override_msg }}</p>
+                </div>
                 {% endif %}
-                
+
                 {% if scenario_data %}
-                    <h3 class="text-2xl font-bold mb-6 text-black w-full text-left border-b-2 border-black pb-2 uppercase">Your Voting Flow</h3>
-                    <!-- Screen reader accessible text for the flowchart result -->
+                    <h3 class="text-2xl font-bold mb-4 text-black border-b-2 border-black pb-2 uppercase">📊 Your Legal Voting Path</h3>
+
+                    <!-- Screen reader text -->
                     <div class="sr-only">
-                        Flowchart result generated. Based on your selection, follow the steps shown visually on screen.
+                        Flowchart generated. Procedural steps listed below:
+                        {% if procedure_steps %}
+                            {% for step in procedure_steps %}Step {{ loop.index }}: {{ step }}.{% endfor %}
+                        {% endif %}
                     </div>
-                    <div class="mermaid w-full overflow-x-auto text-lg font-bold" aria-hidden="true">
+
+                    <!-- Mermaid Flowchart -->
+                    <div class="mermaid w-full overflow-x-auto" aria-hidden="true">
                         {{ scenario_data | safe }}
                     </div>
-                    
-                    <div class="mt-8 w-full border-t-2 border-black pt-6 text-center">
-                        <h4 class="text-xl font-bold text-black mb-4">Commit to Vote Action</h4>
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Polling+Day&dates=20260409T080000Z/20260409T180000Z&details=Remember+to+bring+your+EPIC+card+or+approved+alternative+ID.+Verify+your+polling+booth+in+advance.&location=Assigned+Polling+Station" target="_blank" rel="noopener noreferrer" class="gov-button-outline inline-block">
+
+                    <!-- Procedure Steps (accessible list) -->
+                    {% if procedure_steps %}
+                    <div class="mt-6 border-t-2 border-black pt-4">
+                        <h4 class="font-bold text-lg text-black mb-3">📋 Step-by-Step Procedure:</h4>
+                        <ol class="space-y-2">
+                            {% for step in procedure_steps %}
+                            <li class="flex items-start gap-3">
+                                <span class="bg-primary text-white font-bold w-7 h-7 flex items-center justify-center flex-shrink-0 mt-0.5">{{ loop.index }}</span>
+                                <span class="text-black">{{ step }}</span>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+
+                    <!-- Google Calendar Commit to Vote -->
+                    <div class="mt-6 border-t-2 border-black pt-6 text-center">
+                        <h4 class="text-lg font-bold text-black mb-3">📅 Commit to Vote</h4>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Polling+Day+2026&dates=20260409T030000Z/20260409T120000Z&details=Checklist:%0A✓+Bring+EPIC+Card+or+approved+alternative+ID%0A✓+Verify+your+polling+booth+at+nvsp.in%0A✓+Check+your+name+on+the+Electoral+Roll%0A✓+Polling+hours:+7AM-5PM&location=Your+Assigned+Polling+Station"
+                           target="_blank" rel="noopener noreferrer"
+                           class="gov-button-outline inline-block text-lg px-6 py-3"
+                           aria-label="Add your polling day reminder to Google Calendar">
                             📅 Add Polling Day to Google Calendar
                         </a>
                     </div>
+
                 {% else %}
-                    <div class="text-center text-black font-bold">
-                        <div class="text-6xl mb-6" aria-hidden="true">🔀</div>
-                        <p class="text-2xl">Select a scenario to see the flowchart.</p>
+                    <div class="flex-1 flex flex-col items-center justify-center text-center text-black font-bold p-8">
+                        <div class="text-7xl mb-6" aria-hidden="true">⚡</div>
+                        <p class="text-2xl mb-2">Dual-Agent Engine Ready</p>
+                        <p class="text-base font-normal text-gray-700">Select a scenario to activate the Chain-of-Thought mapper and receive your personalized legal voting path.</p>
                     </div>
                 {% endif %}
             </div>

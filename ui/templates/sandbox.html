@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Polling Sandbox - Practice Booth Scenarios{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-8">
+    <div class="dashboard-card p-8 border-t-8 border-primary">
+        <div class="text-center mb-8 border-b-4 border-black pb-6">
+            <span class="text-5xl" aria-hidden="true">🎭</span>
+            <h1 class="text-4xl font-extrabold text-black uppercase mt-2">Polling Sandbox</h1>
+            <p class="text-xl text-black font-bold mt-2">Roleplay exercise: Practice handling 'booth friction' scenarios in a safe environment.</p>
+        </div>
+
+        <div class="bg-amber-50 border-4 border-amber-700 p-6 mb-8">
+            <h2 class="text-2xl font-bold text-black mb-4">🚧 Scenario: Booth Friction</h2>
+            <p class="text-lg text-black font-semibold">
+                You arrive at your polling station. Your name is on the Electoral Roll, and you have your Voter ID.
+                However, the polling officer says your name "doesn't match" and is blocking you from entering.
+            </p>
+            <p class="text-lg text-black font-bold mt-4">What do you do?</p>
+        </div>
+
+        <form method="POST" action="/sandbox" class="space-y-4">
+            <fieldset class="space-y-4">
+                <legend class="sr-only">Choose your response to the booth friction scenario</legend>
+
+                <button type="submit" name="action" value="argue" id="action-argue"
+                    class="w-full text-left p-5 border-4 border-black bg-white hover:bg-red-50 transition-colors font-bold text-lg">
+                    😡 Option A: Argue loudly that you have the right to vote.
+                </button>
+                <button type="submit" name="action" value="presiding_officer" id="action-presiding"
+                    class="w-full text-left p-5 border-4 border-black bg-white hover:bg-green-50 transition-colors font-bold text-lg">
+                    🙋 Option B: Calmly request to speak to the Presiding Officer.
+                </button>
+                <button type="submit" name="action" value="tender_vote" id="action-tender"
+                    class="w-full text-left p-5 border-4 border-black bg-white hover:bg-blue-50 transition-colors font-bold text-lg">
+                    📜 Option C: Request your right to a Tender Vote under the RPA 1951.
+                </button>
+                <button type="submit" name="action" value="leave" id="action-leave"
+                    class="w-full text-left p-5 border-4 border-black bg-white hover:bg-gray-100 transition-colors font-bold text-lg">
+                    🚶 Option D: Give up and leave the polling station.
+                </button>
+            </fieldset>
+        </form>
+
+        {% if result %}
+        <div class="mt-8 p-6 border-4 {{ 'border-green-700 bg-green-50' if result.outcome == 'success' else 'border-red-700 bg-red-50' }}" aria-live="polite" role="alert">
+            <p class="text-2xl font-extrabold {{ 'text-green-800' if result.outcome == 'success' else 'text-red-800' }}">
+                {{ '✅ CORRECT!' if result.outcome == 'success' else '❌ INCORRECT' }}
+            </p>
+            <p class="text-lg font-bold text-black mt-3">{{ result.msg }}</p>
+            <p class="text-base text-black mt-2 border-t-2 border-current pt-3">💡 <strong>Legal Tip:</strong> {{ result.tip }}</p>
+        </div>
+        {% endif %}
+
+        <div class="mt-8 text-center">
+            <a href="/simulator" class="gov-button-outline inline-block">← Back to Scenario Simulator</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
