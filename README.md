@@ -13,7 +13,11 @@ A web application built with Python/Flask and Tailwind CSS designed to guide use
    ```bash
    python app.py
    ```
-4. **Access the App**: Open your web browser and navigate to `http://127.0.0.1:5000/`.
+4. **Access Locally**: Open your web browser and navigate to `http://127.0.0.1:5000/`.
+
+**Live Deployment**: 
+The application is officially deployed and accessible at:
+🌍 [https://election-process-education-1-4yp8.onrender.com/](https://election-process-education-1-4yp8.onrender.com/)
 
 ## ✨ Features
 - **Stages Guide:** Clear instructions for Registration, Verification, and Polling Day.
